@@ -365,7 +365,7 @@ else:
     # Применение фильтров
     filtered_df = df.copy()
 
-    if selected_address != 'Введите улицу':
+    if selected_address != 'Все':
         filtered_df = filtered_df[filtered_df['address'] == selected_address]
 
     if selected_prov != 'Все':
