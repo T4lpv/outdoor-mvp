@@ -335,8 +335,9 @@ if df.empty:
 else:
     st.sidebar.markdown("### 🔍 Фильтры Поиска")
 
-    # НАДЕЖНЫЙ ПОИСК ПО АДРЕСУ
-    search_address = st.sidebar.text_input("Поиск по улице / адресу", "")
+    # ВЫПАДАЮЩИЙ СПИСОК С ПОИСКОМ ПО АДРЕСУ
+    address_list = ['Все'] + sorted(list(df['address'].astype(str).unique()))
+    selected_address = st.sidebar.selectbox("Поиск по улице / адресу", address_list)
 
     prov_list = ['Все'] + sorted(list(df['provider'].astype(str).unique()))
     selected_prov = st.sidebar.selectbox("Поставщик", prov_list)
@@ -364,9 +365,8 @@ else:
     # Применение фильтров
     filtered_df = df.copy()
 
-    if search_address:
-        filtered_df = filtered_df[
-            filtered_df['address'].str.contains(search_address, case=False, na=False, regex=False)]
+    if selected_address != 'Введите улицу':
+        filtered_df = filtered_df[filtered_df['address'] == selected_address]
 
     if selected_prov != 'Все':
         filtered_df = filtered_df[filtered_df['provider'] == selected_prov]
